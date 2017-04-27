@@ -40,6 +40,17 @@ class Fanbot:
             "FanBot logged in and ready to adore!",
             "Hello, world!  Fan Bot is up and running!"
         ]
+        tweet = random.choice(tweet_options)
+        return self.api.update_status(tweet)
+
+    def goodbye(self):
+        tweet_options = [
+            "Signing off for now!",
+            "Fan Bot shutting down.",
+            "Logging off.  Bye Felicia!",
+        ]
+        tweet = random.choice(tweet_options)
+        return self.api.update_status(tweet)
 
 
 
