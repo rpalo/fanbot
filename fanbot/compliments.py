@@ -1,3 +1,9 @@
+"""A long list of compliments.  Sources:
+
+Nataly Kogan - https://www.happier.com/blog/nice-things-to-say-100-compliments
+People Are Nice Blog - http://peoplearenice.blogspot.com/p/compliment-list.html
+"""
+
 COMPLIMENTS = """Your smile is contagious.
 You look great today.
 You're a smart cookie.
