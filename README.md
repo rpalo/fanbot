@@ -1,11 +1,13 @@
 # FanBot
 
-A twitter bot to drive the TylersDailyPositive bot.
+A twitter bot to compliment people and make them feel happy.
 
 ## Features
 
+ - Randomly tweets a random compliment from compliments.txt at your target
+
 ## Future Features
 
- - Randomly tweets a random compliment from compliments.txt at Tyler
  - Replies to @tweets and DMS?
- - Learns from Tyler's tweets?
+ - Learns from target's tweets?
+ - Target can tell bot how frequently to post?

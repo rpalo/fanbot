@@ -33,6 +33,12 @@ class Fanbot:
         tweet = "{} {}".format(self.idol, compliment)
         return self.api.update_status(tweet)
 
+    def print_compliment(self):
+        """Print a compliment at its target"""
+        compliment = self.compliment()
+        tweet = "{} {}".format(self.idol, compliment)
+        print(tweet)
+
     def hello_world(self):
         """Posts a status stating the bot is now in control."""
         tweet_options = [
