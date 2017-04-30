@@ -1,5 +1,6 @@
 """Contains Fanbot class that drives the twitter account"""
 
+import logging
 import random
 import tweepy
 
@@ -16,7 +17,8 @@ class Fanbot:
         # Be sure to include @ in front of usernames
         self.target = target_username
         self.username = bot_username
-        self.most_recent_mention_id = 0
+        self.most_recent_mention_id = self.most_recent_post().id
+        logging.info("Bot created")
 
     def compliment(self):
         """Returns a random compliment"""
@@ -25,6 +27,11 @@ class Fanbot:
     def is_connected(self):
         """Returns true if bot can connect to twitter"""
         return self.api.verify_credentials()
+
+    def most_recent_post(self):
+        """Returns the bot's most recent post"""
+        bot_user_info = self.api.me()
+        return bot_user_info.status
 
     def connect(self, consumer_key, consumer_secret, access_token, access_token_secret):
         """Connects bot to twitter and handles authentication"""
@@ -36,7 +43,9 @@ class Fanbot:
         """Posts a compliment at its target"""
         compliment = self.compliment()
         tweet = "{} {}".format(self.target, compliment)
-        return self.api.update_status(tweet)
+        result = self.api.update_status(tweet)
+        logging.info("Posted: {}".format(result.text))
+        return result
 
     def print_compliment(self):
         """Print a compliment at its target"""
@@ -52,6 +61,7 @@ class Fanbot:
             "Hello, world!  Fan Bot is up and running!"
         ]
         tweet = random.choice(tweet_options)
+        logging.info("Sending Hello World Tweet: {}".format(tweet))
         return self.api.update_status(tweet)
 
     def goodbye(self):
@@ -62,6 +72,7 @@ class Fanbot:
             "Logging off.  Bye Felicia!",
         ]
         tweet = random.choice(tweet_options)
+        logging.info("Sending Goodbye Tweet: {}".format(tweet))
         return self.api.update_status(tweet)
 
     def get_messages(self, filter_target=True):
@@ -84,6 +95,7 @@ class Fanbot:
         # Set flag filter_target=False to allow anybody to prompt bot
         # to respond.  Default is True
         new_messages = self.get_messages(filter_target=False)
+        logging.info("Checking messages: {} results".format(len(new_messages)))
         # Simplest implementation tweets a compliment regardless of message
         if new_messages:
             self.post_compliment()
