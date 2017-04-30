@@ -13,6 +13,8 @@ A twitter bot to compliment people and make them feel happy.
  - Learns from target's tweets?
  - Target can tell bot how frequently to post?
  - Console mode for debugging?
+ - Main.py --no-greeting argument
+ - Command line arg for printing tweets instead of tweeting to API for debugging.
 
 ## Installation and Operation
 
