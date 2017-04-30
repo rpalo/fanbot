@@ -5,12 +5,14 @@ A twitter bot to compliment people and make them feel happy.
 ## Features
 
  - Randomly tweets a random compliment from compliments.txt at your target
+ - Can be asked for an immediate compliment
 
 ## Future Features
 
- - Replies to @tweets and DMS?
+ - Posse mode?  Retweet with hype!
  - Learns from target's tweets?
  - Target can tell bot how frequently to post?
+ - Console mode for debugging?
 
 ## Installation and Operation
 

@@ -14,6 +14,7 @@ class TestFanBot:
         self.compliments = compliments.COMPLIMENTS
         self.fanbot = fanbot.Fanbot(
             secrets.TARGET,
+            secrets.USERNAME,
             compliments.COMPLIMENTS,
             secrets.CONSUMER_KEY,
             secrets.CONSUMER_SECRET,

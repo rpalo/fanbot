@@ -10,6 +10,7 @@ from fanbot import compliments, secrets
 # Initially hardcoding a schedule.  Could be swapped out later
 bot = Fanbot(
     secrets.TARGET,
+    secrets.USERNAME,
     compliments.COMPLIMENTS,
     secrets.CONSUMER_KEY,
     secrets.CONSUMER_SECRET,
@@ -21,13 +22,13 @@ bot.hello_world()
 try:
 
     # PLACE YOUR CUSTOM SCHEDULES HERE.  SEE SCHEDULE MODULE DOCUMENTATION.
-    # schedule.every(15).seconds.do(bot.post_compliment)
+    schedule.every(30).minutes.do(bot.respond_to_tweets)
     schedule.every().day.at("10:30").do(bot.post_compliment)
     while True:
         schedule.run_pending()
-        # You can tune the sleep length too.  Since I'm only having it
-        # run one compliment per day, I have an hourly check in.
-        time.sleep(3600)
+        # You can tune the sleep length too.  Should be roughly the same
+        # as the most frequently scheduled job above
+        time.sleep(30*60) # seconds
 
 except KeyboardInterrupt:
     bot.goodbye()

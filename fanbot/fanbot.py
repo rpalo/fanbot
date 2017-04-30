@@ -5,16 +5,18 @@ import tweepy
 
 class Fanbot:
     """Drives fanbot twitter account"""
-    def __init__(self, target_username, compliment_list,
-                consumer_key, consumer_secret, access_token, access_token_secret):
+    def __init__(self, target_username, bot_username, compliment_list,
+                 consumer_key, consumer_secret, access_token, access_token_secret):
         self.compliments = compliment_list
         # Secrets not stored within instance for security reasons.
         # Also, not looked up from .secrets directly because that could
         # be a messy API.  Cleaner to have the user specify where the
         # secrets, target, and compliments come from.
         self.connect(consumer_key, consumer_secret, access_token, access_token_secret)
-        # Be sure to include @ in front of username
+        # Be sure to include @ in front of usernames
         self.target = target_username
+        self.username = bot_username
+        self.most_recent_mention_id = 0
 
     def compliment(self):
         """Returns a random compliment"""
@@ -33,13 +35,13 @@ class Fanbot:
     def post_compliment(self):
         """Posts a compliment at its target"""
         compliment = self.compliment()
-        tweet = "{} {}".format(self.idol, compliment)
+        tweet = "{} {}".format(self.target, compliment)
         return self.api.update_status(tweet)
 
     def print_compliment(self):
         """Print a compliment at its target"""
         compliment = self.compliment()
-        tweet = "{} {}".format(self.idol, compliment)
+        tweet = "{} {}".format(self.target, compliment)
         print(tweet)
 
     def hello_world(self):
@@ -53,6 +55,7 @@ class Fanbot:
         return self.api.update_status(tweet)
 
     def goodbye(self):
+        """Tweets a sign off message"""
         tweet_options = [
             "Signing off for now!",
             "Fan Bot shutting down.",
@@ -60,6 +63,30 @@ class Fanbot:
         ]
         tweet = random.choice(tweet_options)
         return self.api.update_status(tweet)
+
+    def get_messages(self, filter_target=True):
+        """Retrieves a list of messages directed @ fanbot"""
+        # Include the "from: " clause to filter by only the target
+        if filter_target:
+            query = "from:{} {}".format(self.target, self.username)
+        else:
+            query = self.username
+        mentions = self.api.search(query, since_id=self.most_recent_mention_id)
+        if mentions:
+            results = [mention.text for mention in mentions]
+            self.most_recent_mention_id = mentions[0].id
+        else:
+            results = []
+        return results
+
+    def respond_to_tweets(self):
+        """Checks for messages and responds appropriately"""
+        # Set flag filter_target=False to allow anybody to prompt bot
+        # to respond.  Default is True
+        new_messages = self.get_messages(filter_target=False)
+        # Simplest implementation tweets a compliment regardless of message
+        if new_messages:
+            self.post_compliment()
 
 
 
