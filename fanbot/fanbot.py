@@ -3,28 +3,31 @@
 import random
 import tweepy
 
-from .compliments import COMPLIMENTS
-from . import secrets
-
 class Fanbot:
     """Drives fanbot twitter account"""
-    def __init__(self, idol_user):
-        self.connect()
+    def __init__(self, target_username, compliment_list,
+                consumer_key, consumer_secret, access_token, access_token_secret):
+        self.compliments = compliment_list
+        # Secrets not stored within instance for security reasons.
+        # Also, not looked up from .secrets directly because that could
+        # be a messy API.  Cleaner to have the user specify where the
+        # secrets, target, and compliments come from.
+        self.connect(consumer_key, consumer_secret, access_token, access_token_secret)
         # Be sure to include @ in front of username
-        self.idol = idol_user
+        self.target = target_username
 
     def compliment(self):
         """Returns a random compliment"""
-        return random.choice(COMPLIMENTS)
+        return random.choice(self.compliments)
 
     def is_connected(self):
         """Returns true if bot can connect to twitter"""
         return self.api.verify_credentials()
 
-    def connect(self):
+    def connect(self, consumer_key, consumer_secret, access_token, access_token_secret):
         """Connects bot to twitter and handles authentication"""
-        auth = tweepy.OAuthHandler(secrets.CONSUMER_KEY, secrets.CONSUMER_SECRET)
-        auth.set_access_token(secrets.ACCESS_TOKEN, secrets.ACCESS_TOKEN_SECRET)
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        auth.set_access_token(access_token, access_token_secret)
         self.api = tweepy.API(auth)
 
     def post_compliment(self):
