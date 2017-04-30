@@ -39,7 +39,7 @@ class Fanbot:
         auth.set_access_token(access_token, access_token_secret)
         self.api = tweepy.API(auth)
 
-    def post_compliment(self, extra_text = None):
+    def post_compliment(self, extra_text=None):
         """Posts a compliment at its target"""
         compliment = self.compliment()
         tweet = "{} {}".format(self.target, compliment)
@@ -50,10 +50,13 @@ class Fanbot:
         logging.info("Posted: {}".format(result.text))
         return result
 
-    def print_compliment(self):
+    def print_compliment(self, extra_text=None):
         """Print a compliment at its target"""
         compliment = self.compliment()
         tweet = "{} {}".format(self.target, compliment)
+        if extra_text:
+            tweet += " - " + extra_text
+        tweet = tweet[:140]
         print(tweet)
 
     def hello_world(self):
