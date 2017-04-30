@@ -1,7 +1,7 @@
 """Test module for fanbot"""
 
 from fanbot import fanbot
-from fanbot import compliments
+from fanbot import compliments, secrets
 
 def test_simple():
     """Ensure testing is working"""
@@ -12,9 +12,14 @@ class TestFanBot:
 
     def setup_class(self):
         self.compliments = compliments.COMPLIMENTS
-
-    def setup_method(self):
-        self.fanbot = fanbot.Fanbot()
+        self.fanbot = fanbot.Fanbot(
+            secrets.TARGET,
+            compliments.COMPLIMENTS,
+            secrets.CONSUMER_KEY,
+            secrets.CONSUMER_SECRET,
+            secrets.ACCESS_TOKEN,
+            secrets.ACCESS_TOKEN_SECRET
+        )
 
     def test_fanbot_can_compliment(self):
         assert self.fanbot.compliment() in self.compliments
