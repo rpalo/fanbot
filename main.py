@@ -1,5 +1,6 @@
 """Main loop program for the Fan Bot"""
 
+import argparse
 import logging
 import time
 
@@ -9,6 +10,10 @@ from fanbot.fanbot import Fanbot
 from fanbot import compliments, secrets
 
 logging.basicConfig(level=logging.INFO)
+parser = argparse.ArgumentParser(description="Tell a FanBot what to do.")
+parser.add_argument("--no-greeting", dest="greet", action='store_false',
+                    help="Mutes initial startup message.")
+args = parser.parse_args()
 
 bot = Fanbot(
     secrets.TARGET,
@@ -20,7 +25,8 @@ bot = Fanbot(
     secrets.ACCESS_TOKEN_SECRET
 )
 
-bot.hello_world()
+if args.greet:
+    bot.hello_world()
 try:
     # Initially hardcoding a schedule.  Could be swapped out later
     # PLACE YOUR CUSTOM SCHEDULES HERE.  SEE SCHEDULE MODULE DOCUMENTATION.
@@ -33,7 +39,8 @@ try:
         time.sleep(30*60) # seconds
 
 except KeyboardInterrupt:
-    bot.goodbye()
+    if args.greet:
+        bot.goodbye()
 
 
 
