@@ -1,5 +1,6 @@
 """Contains Fanbot class that drives the twitter account"""
 
+from datetime import datetime
 import logging
 import random
 import tweepy
@@ -47,7 +48,7 @@ class Fanbot:
             tweet += " - " + extra_text
         tweet = tweet[:140] # Stay below char limit
         result = self.api.update_status(tweet)
-        logging.info("Posted: {}".format(result.text))
+        logging.info("Posted: %s", result.text)
         return result
 
     def print_compliment(self, extra_text=None):
@@ -67,7 +68,10 @@ class Fanbot:
             "Hello, world!  Fan Bot is up and running!"
         ]
         tweet = random.choice(tweet_options)
-        logging.info("Sending Hello World Tweet: {}".format(tweet))
+        # Avoid duplicate status errors
+        pretty_time_stamp = datetime.now().strftime("%m-%d %I:%M%p")
+        tweet = pretty_time_stamp + " - " + tweet
+        logging.info("Sending Hello World Tweet: %s", tweet)
         return self.api.update_status(tweet)
 
     def goodbye(self):
@@ -78,7 +82,10 @@ class Fanbot:
             "Logging off.  Bye Felicia!",
         ]
         tweet = random.choice(tweet_options)
-        logging.info("Sending Goodbye Tweet: {}".format(tweet))
+        # Avoid Duplicate Status Errors
+        pretty_time_stamp = datetime.now().strftime("%m-%d %I:%M%p")
+        tweet = pretty_time_stamp + " - " + tweet
+        logging.info("Sending Goodbye Tweet: %s", tweet)
         return self.api.update_status(tweet)
 
     def get_messages(self, filter_target=True):
@@ -90,7 +97,8 @@ class Fanbot:
             query = self.username
         mentions = self.api.search(query, since_id=self.most_recent_mention_id)
         if mentions:
-            results = [mention.text for mention in mentions]
+            results = [{"text": mention.text,
+                        "author": mention.author} for mention in mentions]
             self.most_recent_mention_id = mentions[0].id
         else:
             results = []
@@ -101,11 +109,11 @@ class Fanbot:
         # Set flag filter_target=False to allow anybody to prompt bot
         # to respond.  Default is True
         new_messages = self.get_messages(filter_target=False)
-        logging.info("Checking messages: {} results".format(len(new_messages)))
+        logging.info("Checking messages: %s results", len(new_messages))
         # Simplest implementation tweets a compliment regardless of message
         if new_messages:
-            other_requestors = [message.author.name for message in new_messages
-                                if message.author.screen_name != "Tpaylo"]
+            other_requestors = [message["author"].name for message in new_messages
+                                if message["author"].screen_name != "Tpaylo"]
             requestor_text = "from {}".format(", ".join(other_requestors))
             self.post_compliment(extra_text=requestor_text)
 
