@@ -8,7 +8,8 @@ import tweepy
 class Fanbot:
     """Drives fanbot twitter account"""
     def __init__(self, target_username, bot_username, compliment_list,
-                 consumer_key, consumer_secret, access_token, access_token_secret):
+                 consumer_key=None, consumer_secret=None,
+                 access_token=None, access_token_secret=None):
         self.compliments = compliment_list
         # Secrets not stored within instance for security reasons.
         # Also, not looked up from .secrets directly because that could
@@ -40,16 +41,22 @@ class Fanbot:
         auth.set_access_token(access_token, access_token_secret)
         self.api = tweepy.API(auth)
 
+    def tweet(self, message, timestamp=True):
+        """Actually sends a tweet to twitter"""
+        timestamp = datetime.now().strftime("%m-%d %I:%M%p")
+        valid_tweet = "{}//{}".format(timestamp, message)
+        valid_tweet = valid_tweet[:140] # <= 140 chars
+        logging.info("Posted: %s", valid_tweet)
+        return self.api.update_status(valid_tweet)
+
+
     def post_compliment(self, extra_text=None):
         """Posts a compliment at its target"""
         compliment = self.compliment()
         tweet = "{} {}".format(self.target, compliment)
         if extra_text:
             tweet += " - " + extra_text
-        tweet = tweet[:140] # Stay below char limit
-        result = self.api.update_status(tweet)
-        logging.info("Posted: %s", result.text)
-        return result
+        return self.tweet(tweet)
 
     def print_compliment(self, extra_text=None):
         """Print a compliment at its target"""
@@ -57,7 +64,6 @@ class Fanbot:
         tweet = "{} {}".format(self.target, compliment)
         if extra_text:
             tweet += " - " + extra_text
-        tweet = tweet[:140]
         print(tweet)
 
     def hello_world(self):
@@ -68,11 +74,7 @@ class Fanbot:
             "Hello, world!  Fan Bot is up and running!"
         ]
         tweet = random.choice(tweet_options)
-        # Avoid duplicate status errors
-        pretty_time_stamp = datetime.now().strftime("%m-%d %I:%M%p")
-        tweet = pretty_time_stamp + " - " + tweet
-        logging.info("Sending Hello World Tweet: %s", tweet)
-        return self.api.update_status(tweet)
+        return self.tweet(tweet)
 
     def goodbye(self):
         """Tweets a sign off message"""
@@ -82,11 +84,7 @@ class Fanbot:
             "Logging off.  Bye Felicia!",
         ]
         tweet = random.choice(tweet_options)
-        # Avoid Duplicate Status Errors
-        pretty_time_stamp = datetime.now().strftime("%m-%d %I:%M%p")
-        tweet = pretty_time_stamp + " - " + tweet
-        logging.info("Sending Goodbye Tweet: %s", tweet)
-        return self.api.update_status(tweet)
+        return self.tweet(tweet)
 
     def get_messages(self, filter_target=True):
         """Retrieves a list of messages directed @ fanbot"""
