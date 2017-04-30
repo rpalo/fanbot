@@ -39,10 +39,13 @@ class Fanbot:
         auth.set_access_token(access_token, access_token_secret)
         self.api = tweepy.API(auth)
 
-    def post_compliment(self):
+    def post_compliment(self, extra_text = None):
         """Posts a compliment at its target"""
         compliment = self.compliment()
         tweet = "{} {}".format(self.target, compliment)
+        if extra_text:
+            tweet += " - " + extra_text
+        tweet = tweet[:140] # Stay below char limit
         result = self.api.update_status(tweet)
         logging.info("Posted: {}".format(result.text))
         return result
@@ -98,7 +101,10 @@ class Fanbot:
         logging.info("Checking messages: {} results".format(len(new_messages)))
         # Simplest implementation tweets a compliment regardless of message
         if new_messages:
-            self.post_compliment()
+            other_requestors = [message.author.name for message in new_messages
+                                if message.author.screen_name != "Tpaylo"]
+            requestor_text = "from {}".format(", ".join(other_requestors))
+            self.post_compliment(extra_text=requestor_text)
 
 
 
