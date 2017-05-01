@@ -23,7 +23,9 @@ Installation should go pretty quickly.
 
  1. Clone this repository - `git clone https://github.com/rpalo/fanbot.git && cd fanbot`
  2. (Optional) Create a virtual environment for the application - `python3 -m venv .venv`  If you name it `.venv`, the .gitignore file will ignore it by default.
- 3. (Required only if you did step 2) Activate your virtual environment - `.venv/scripts/activate`
+ 3. (Required only if you did step 2) Activate your virtual environment
+  - Windows PowerShell: `.venv/scripts/activate`
+  - *nix: `source .venv/bin/activate`
  4. Install the required packages - `pip3 install -r requirements.txt`
  5. Create your secrets file - `mv fanbot/secrets.sample.py fanbot/secrets.py`
  6. Create a twitter account for your bot.
