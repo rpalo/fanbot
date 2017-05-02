@@ -93,7 +93,8 @@ class Fanbot:
             query = "from:{} {}".format(self.target, self.username)
         else:
             query = self.username
-        mentions = self.api.search(query, since_id=self.most_recent_mention_id)
+        recents = self.api.home_timeline(since_id=self.most_recent_mention_id)
+        mentions = [recent for recent in recents if query in recent.text]
         if mentions:
             results = [{"text": mention.text,
                         "author": mention.author} for mention in mentions]
