@@ -112,6 +112,7 @@ class Fanbot:
         if new_messages:
             other_requestors = [message["author"].name for message in new_messages
                                 if message["author"].screen_name != "Tpaylo"]
+            requestor_text = ""
             if other_requestors:
                 requestor_text = "from {}".format(", ".join(other_requestors))
             self.post_compliment(extra_text=requestor_text)
