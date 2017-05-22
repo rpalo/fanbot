@@ -6,6 +6,7 @@ A twitter bot to compliment people and make them feel happy.
 
  - Randomly tweets a random compliment from compliments.txt at your target
  - Can be asked for an immediate compliment
+ - Includes lock.py for autorestarting upon server restart
 
 ## Future Features
 
@@ -13,7 +14,6 @@ A twitter bot to compliment people and make them feel happy.
  - Learns from target's tweets?
  - Target can tell bot how frequently to post?
  - Console mode for debugging?
- - Main.py --no-greeting argument
  - Command line arg for printing tweets instead of tweeting to API for debugging.
  - Quick install tool?  I'm not sure if the install process is too long or not.
 
@@ -37,6 +37,12 @@ Installation should go pretty quickly.
  12. Let 'er rip!  `python3 main.py`
 
 Currently, I'm working on setting up logging and other things, so you'll have to figure out how you want to keep your script running.  If you have ideas let me know.  I've got a [PythonAnywhere](https://pythonanywhere.com) instance that I just spun up and keep running in terminal mode.
+
+## Autorestarting
+
+In order to to auto restarting, run the script with the `--lock` option.
+`python3 main.py --lock`)
+Then setup a cron job (or whatever other task scheduler you prefer) periodically run `lock.py`.  The `--lock` option binds a lock socket.  `lock.py` will check if that socket is still bound.  If so, it doesn't do anything else.  If the socket is available, it means the server restarted and the fanbot is no longer running and needs restarted.
 
 ## Customization
 
