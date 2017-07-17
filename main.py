@@ -13,15 +13,8 @@ logging.basicConfig(level=logging.INFO)
 
 def main(greeting=True):
         
-    bot = Fanbot(
-        secrets.TARGET,
-        secrets.USERNAME,
-        compliments.COMPLIMENTS,
-        secrets.CONSUMER_KEY,
-        secrets.CONSUMER_SECRET,
-        secrets.ACCESS_TOKEN,
-        secrets.ACCESS_TOKEN_SECRET
-    )
+    bot = Fanbot.create_from_modules(secrets, compliments)
+    
     if greeting:
         bot.hello_world()
     try:

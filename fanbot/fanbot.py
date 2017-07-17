@@ -22,6 +22,18 @@ class Fanbot:
         self.most_recent_mention_id = self.most_recent_post().id
         logging.info("Bot created")
 
+    @classmethod
+    def create_from_modules(cls, secrets, compliments):
+        return cls(
+            secrets.TARGET,
+            secrets.USERNAME,
+            compliments.COMPLIMENTS,
+            secrets.CONSUMER_KEY,
+            secrets.CONSUMER_SECRET,
+            secrets.ACCESS_TOKEN,
+            secrets.ACCESS_TOKEN_SECRET
+        )
+
     def compliment(self):
         """Returns a random compliment"""
         return random.choice(self.compliments)
