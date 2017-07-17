@@ -1,0 +1,10 @@
+[Unit]
+Description=Fanbot Service
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart={{ path_to_venv_python }} {{ path_to_mainpy }} {{ no-greeting }}
+
+[Install]
+WantedBy=multi-user.target

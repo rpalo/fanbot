@@ -2,7 +2,6 @@
 
 import argparse
 import logging
-import socket
 import time
 
 import schedule
@@ -40,27 +39,10 @@ def main(greeting=True):
         if greeting:
             bot.goodbye()
 
-def check_and_aquire_lock():
-    """Aquires a lock socket so the auto-restart service knows we're
-    running"""
-    sock = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
-    try:
-        lock_id = "rpalo.fanbot"
-        sock.bind("\0" + lock_id)
-        logging.info("Aquired lock at %r", lock_id)
-        return True
-    except socket.error:
-        logging.warning("Couldn't re-lock %r.  Bot could be already running?", lock_id)
-        return False
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Tell a FanBot what to do.")
     parser.add_argument("--no-greeting", dest="greet", action='store_false',
                     help="Mutes initial startup message.")
-    parser.add_argument("--lock", dest="lock", action="store_true",
-                    help="Locks a socket to allow for automatic restarting")
     args = parser.parse_args()
-    if args.lock:
-        check_and_aquire_lock()
     main(greeting=args.greet)
 
