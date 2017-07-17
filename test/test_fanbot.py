@@ -28,5 +28,6 @@ class TestFanBot:
     def test_fanbot_can_connect_to_twitter(self):
         assert self.fanbot.is_connected()
 
-
-
+    def test_fanbot_can_be_created_from_modules(self):
+        f = fanbot.Fanbot.create_from_modules(secrets, compliments)
+        assert f.is_connected()
