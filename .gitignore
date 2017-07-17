@@ -1,4 +1,6 @@
+.vscode/
 .cache/
 **/__pycache__/
 fanbot/secrets.py
 .venv/
+haters
