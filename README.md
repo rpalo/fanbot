@@ -36,17 +36,43 @@ Installation should go pretty quickly.
  11. Fill out the `main.py` file with instructions of your own.  Take note of Twitter's [rate limiting policy.](https://dev.twitter.com/rest/public/rate-limiting)  See the [schedule module documentation](https://pypi.python.org/pypi/schedule) for more info.
  12. Run the tests to make sure everything's working right.  In the main folder, simply type `pytest`.  (As is evident, this uses Pytest.  If you prefer `nose` or another testing tool, you might have to do some tweedling before you can test.  Or maybe not.  Not sure.)
  13. Let 'er rip!  `python3 main.py`
- 13. (Optional) Set up your bot [as a service](#Setting-Up-as-a-Service) so it will run on a remote server and have output logs and you can leave it alone the "right way".
+ 13. (Optional) Set up your bot [as a service](#setting-up-as-a-service) so it will run on a remote server and have output logs and you can leave it alone the "right way".
 
 ## Setting Up as a Service
 
-Included in the main folder is a file `fanbot.service`.  You'll need to edit this folder to include the **absolute** path to your python executable and your `main.py` file.  You can also include any command-line arguments.  To run the service from inside your virtual environment, simply point the python executable to the one in your .venv folder (i.e. /home/{{ you }}/fanbot/.venv/bin/python).  Then it will work as expected.
+Included in the main folder is a file `fanbot.service`.  
 
-## Autorestarting
+1. You'll need to edit this folder to include the **absolute** path to your python executable and your `main.py` file.  You can also include any command-line arguments.  
+2. Once you've got your service file ready, copy it to `/lib/systemd/system`:
+    ```bash
+    sudo cp fanbot.service /lib/systemd/system/fanbot.service
+    ```
+3. It needs permissions of 644 to work: 
+    ```bash
+    sudo chmod 644 /lib/sytemd/system/fanbot.service
+    ```  
+4. Then referesh `systemd` to make sure it's managing your service:
+    ```bash
+    $ sudo systemctl daemon-reload
+    $ sudo systemctl enable fanbot.service
+    ```
+5. Make sure everything works properly:
+    ```bash
+    $ sudo reboot
+    ...
+    $ sudo systemctl status fanbot.service
+    # You should see something good like "active" with a few startup logs.
+    ```
+6. (Optional) To run the service from inside your virtual environment, simply point the python executable to the one in your .venv folder (i.e. /home/{{ you }}/fanbot/.venv/bin/python).  The rest will work as expected.
 
-In order to to auto restarting, run the script with the `--lock` option.
-`python3 main.py --lock`)
-Then setup a cron job (or whatever other task scheduler you prefer) periodically run `lock.py`.  The `--lock` option binds a lock socket.  `lock.py` will check if that socket is still bound.  If so, it doesn't do anything else.  If the socket is available, it means the server restarted and the fanbot is no longer running and needs restarted.
+Once this whole process is complete, you can check the logs on your bot via:
+
+```bash
+$ sudo journalctl -e -u fanbot.service
+# -e scrolls you to the end of the logs
+# -u fanbot.service specifies which service to view.
+# You can also use -f or --follow to watch the logs come through live (like `tail`)
+```
 
 ## Customization
 
