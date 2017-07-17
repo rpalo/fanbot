@@ -34,9 +34,13 @@ Installation should go pretty quickly.
  9. Take note of your Consumer Key, Consumer Secret, Access Token, and Access Token Secret.
  10. Fill these values into your `secrets.py` file.  Also fill in the username of the account you wish to be a fan of.
  11. Fill out the `main.py` file with instructions of your own.  Take note of Twitter's [rate limiting policy.](https://dev.twitter.com/rest/public/rate-limiting)  See the [schedule module documentation](https://pypi.python.org/pypi/schedule) for more info.
- 12. Let 'er rip!  `python3 main.py`
+ 12. Run the tests to make sure everything's working right.  In the main folder, simply type `pytest`.  (As is evident, this uses Pytest.  If you prefer `nose` or another testing tool, you might have to do some tweedling before you can test.  Or maybe not.  Not sure.)
+ 13. Let 'er rip!  `python3 main.py`
+ 13. (Optional) Set up your bot [as a service](#Setting-Up-as-a-Service) so it will run on a remote server and have output logs and you can leave it alone the "right way".
 
-Currently, I'm working on setting up logging and other things, so you'll have to figure out how you want to keep your script running.  If you have ideas let me know.  I've got a [PythonAnywhere](https://pythonanywhere.com) instance that I just spun up and keep running in terminal mode.
+## Setting Up as a Service
+
+Included in the main folder is a file `fanbot.service`.  You'll need to edit this folder to include the **absolute** path to your python executable and your `main.py` file.  You can also include any command-line arguments.  To run the service from inside your virtual environment, simply point the python executable to the one in your .venv folder (i.e. /home/{{ you }}/fanbot/.venv/bin/python).  Then it will work as expected.
 
 ## Autorestarting
 
