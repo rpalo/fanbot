@@ -2,9 +2,37 @@
 
 Nataly Kogan - https://www.happier.com/blog/nice-things-to-say-100-compliments
 People Are Nice Blog - http://peoplearenice.blogspot.com/p/compliment-list.html
+Katie Coyle - https://www.theodysseyonline.com/24-weird-compliments-need-go-out-give-people
+Margaret Liu - https://dev.to/margsliu/comment/202m
 """
 
-COMPLIMENTS = """Your smile is contagious.
+COMPLIMENTS = """
+Your eyelids are completely fantastic!
+Your eyebrows are on fleek.
+I like your outfit so much that if I wore it on the same day as you I wouldn’t even be embarrassed, we’d just be that stylish.
+You’re a great person to do a group project with.
+Being alone is kind of nice. Being alone with you is better.
+You’re always on time to things, which is awesome because I’m not.
+Looking like a complete idiot with you is really fun.
+I would hang out with you even if you hadn’t showered for a couple days.
+I would be really okay with you seeing me without makeup, that’s how much I like you.
+You’re one of my favorite drunken karaoke partners.
+You’re really smart, and I’m not just saying that because I want you in my study group.
+You have really good taste in friends (i.e. me).
+You have a really contagious laugh. See, now I’m laughing and it's all your fault.
+Your sense of humor is exactly like mine.
+You can pull off wildly colored hair and that is a seriously awesome quality.
+I bet that sometimes you actually wake up flawless.
+You actually have a lot of interesting things to say, and I don’t say that about just anyone.
+You’re so hot, you make a dragon want to retire.
+I would go on an 18 hour road trip with you, I like you that much.
+Out of all the strangers I meet on a daily basis, I’m glad you’re one of those strangers that became my friend.
+If you were running for president, I would vote for you.
+If you cooked something really gross, I like you enough that I would tell you instead of politely eating it and hating everything.
+You just look really friendly, can we be friends?
+I would be really okay with just sitting and watching Netflix with you. Nothing else, just that and it would still be really nice.
+If you got really famous, I would be the first member of your fan club.
+Your smile is contagious.
 You look great today.
 You're a smart cookie.
 I bet you make babies smile.
@@ -53,7 +81,7 @@ Colors seem brighter when you're around.
 You're more fun than a ball pit filled with candy. (And seriously, what could be more fun than that?)
 That thing you don't like about yourself is what makes you so interesting.
 You're wonderful.
-You have cute elbows. For reals! (You're halfway through the list. Don't stop now! <a href="http://www.lifehack.org/articles/communication/7-reasons-why-you-should-pay-compliment-someone-every-day.html">You should be giving at least one awesome compliment every day!</a>)
+You have cute elbows. For reals!
 Jokes are funnier when you tell them.
 You're better than a triple-scoop ice cream cone. With sprinkles.
 Your bellybutton is kind of adorable.
@@ -63,7 +91,7 @@ You're inspiring.
 If you were a box of crayons, you'd be the giant name-brand one with the built-in sharpener.
 You should be thanked more often. So thank you!!
 Our community is better because you're in it.
-Someone is getting through something hard right now because you've got their back.&nbsp;
+Someone is getting through something hard right now because you've got their back.
 You have the best ideas.
 You always know how to find that silver lining.
 Everyone gets knocked down sometimes, but you always&nbsp;get back up and keep going.
@@ -72,7 +100,7 @@ You're a great example to others.
 Being around you is like being on a happy little vacation.
 You always know just what to say.
 You're always learning new things and trying to better yourself, which is awesome.
-If someone based an Internet meme on you, it would&nbsp;have impeccable grammar.
+If someone based an Internet meme on you, it would have impeccable grammar.
 You could survive a Zombie apocalypse.
 You're more fun than bubble wrap.
 When you make a mistake, you fix it.
